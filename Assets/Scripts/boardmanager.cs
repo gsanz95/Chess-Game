@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class boardmanager : MonoBehaviour
 {
+    public static boardmanager Instance { set; get; }
+    private bool[,] allowedMoves { set; get; }
+
     public ChessPiece[,] ChessPieces { set; get; }
     private ChessPiece selectedChessPiece;
 
@@ -135,10 +138,10 @@ public class boardmanager : MonoBehaviour
 
         // Dark Team
         // King
-        SpawnChessPiece(6, 3, 7, false);
+        SpawnChessPiece(6, 4, 7, false);
 
         // Queen
-        SpawnChessPiece(7, 4, 7, false);
+        SpawnChessPiece(7, 3, 7, false);
 
         // Bishop
         SpawnChessPiece(8, 2, 7, false);
