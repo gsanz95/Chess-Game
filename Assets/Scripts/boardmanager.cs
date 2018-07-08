@@ -26,6 +26,7 @@ public class boardmanager : MonoBehaviour
 
     private void Start()
     {
+        Instance = this;
         SpawnAllPieces();
     }
 
@@ -63,19 +64,40 @@ public class boardmanager : MonoBehaviour
             return;
         }
 
+        allowedMoves = ChessPieces[x, y].PossibleMove();
         selectedChessPiece = ChessPieces[x, y];
+        BoardHighlights.Instance.HighlightAllowedMoves(allowedMoves);
     }
 
     private void MoveChessPiece(int x, int y)
     {
-        if(selectedChessPiece.PossibleMove (x,y))
+        if(allowedMoves[x, y])
         {
-            ChessPieces[selectedChessPiece.currentX, selectedChessPiece.currentY] = null;
+            ChessPiece c = ChessPieces[x, y];
+
+            if(c != null && c.isLight != isLightTurn)
+            {
+                //Capture Piece
+
+                //If its the king
+                if(c.GetType() == typeof(King))
+                {
+                    //End Game
+                    return;
+                }
+
+                activeChessPiece.Remove(c.gameObject);
+                Destroy(c.gameObject);
+            }
+
+            ChessPieces[selectedChessPiece.CurrentX, selectedChessPiece.CurrentY] = null;
             selectedChessPiece.transform.position = GetTileCenter(x, y);
+            selectedChessPiece.SetPosition(x, y);
             ChessPieces[x, y] = selectedChessPiece;
 
             isLightTurn = !isLightTurn;
         }
+        BoardHighlights.Instance.HideHighlights();
 
         selectedChessPiece = null;
     }

@@ -4,18 +4,18 @@ using UnityEngine;
 
 public abstract class ChessPiece : MonoBehaviour
 {
-    public int currentX { get; set; }
-    public int currentY { get; set; }
+    public int CurrentX { get; set; }
+    public int CurrentY { get; set; }
     public bool isLight;
 
     public void SetPosition(int x, int y)
     {
-        currentX = x;
-        currentY = y;
+        CurrentX = x;
+        CurrentY = y;
     }
 
-    public virtual bool PossibleMove(int x, int y)
+    public virtual bool[,] PossibleMove()
     {
-        return true;
+        return new bool[8,8];
     }
 }

@@ -180,7 +180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5522c8236a3f648b0a65ccb9326db9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightPrefab: {fileID: 0}
+  highlightPrefab: {fileID: 1228010822793176, guid: 7bfce1e4e71327f469634d1c9b11999b,
+    type: 2}
 --- !u!1 &1242908352
 GameObject:
   m_ObjectHideFlags: 0
