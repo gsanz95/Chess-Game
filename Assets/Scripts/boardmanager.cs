@@ -64,7 +64,24 @@ public class boardmanager : MonoBehaviour
             return;
         }
 
+        bool hasAtLeastOneMove = false;
         allowedMoves = ChessPieces[x, y].PossibleMove();
+        for(int i = 0; i < 8; i++)
+        {
+            for(int j = 0; j < 8; j++)
+            {
+                if (allowedMoves[i, j])
+                {
+                    hasAtLeastOneMove = true;
+                }
+            }
+        }
+
+        if(!hasAtLeastOneMove)
+        {
+            return;
+        }
+
         selectedChessPiece = ChessPieces[x, y];
         BoardHighlights.Instance.HighlightAllowedMoves(allowedMoves);
     }
@@ -83,6 +100,7 @@ public class boardmanager : MonoBehaviour
                 if(c.GetType() == typeof(King))
                 {
                     //End Game
+                    EndGame();
                     return;
                 }
 
@@ -230,5 +248,26 @@ public class boardmanager : MonoBehaviour
                 Vector3.forward * (selectionY + 1) + Vector3.right * selectionX,
                 Vector3.forward * selectionY + Vector3.right * (selectionX + 1));
         }
+    }
+
+    private void EndGame()
+    {
+        if(isLightTurn)
+        {
+            Debug.Log("Light team Wins!");
+        }else
+        {
+            Debug.Log("Dark team Wins!");
+        }
+
+        foreach(GameObject go in activeChessPiece)
+        {
+            Destroy(go);
+        }
+
+        isLightTurn = true;
+        BoardHighlights.Instance.HideHighlights();
+        SpawnAllPieces();
+
     }
 }
