@@ -10,6 +10,9 @@ public class boardmanager : MonoBehaviour
     public ChessPiece[,] ChessPieces { set; get; }
     private ChessPiece selectedChessPiece;
 
+    private Material previousMaterial;
+    public Material selectedMaterial;
+
     private const float TILE_SIZE = 1.0f;
     private const float TILE_OFFSET = 0.5f;
 
@@ -34,7 +37,7 @@ public class boardmanager : MonoBehaviour
     void Update()
     {
         UpdateSelection();
-        DrawChessBoard();
+        //DrawChessBoard();
 
         if(Input.GetMouseButtonDown(0))
         {
@@ -83,6 +86,10 @@ public class boardmanager : MonoBehaviour
         }
 
         selectedChessPiece = ChessPieces[x, y];
+        previousMaterial = selectedChessPiece.GetComponent<MeshRenderer>().material;
+        selectedMaterial.mainTexture = previousMaterial.mainTexture;
+        selectedChessPiece.GetComponent<MeshRenderer>().material = selectedMaterial;
+
         BoardHighlights.Instance.HighlightAllowedMoves(allowedMoves);
     }
 
@@ -115,6 +122,8 @@ public class boardmanager : MonoBehaviour
 
             isLightTurn = !isLightTurn;
         }
+
+        selectedChessPiece.GetComponent<MeshRenderer>().material = previousMaterial;
         BoardHighlights.Instance.HideHighlights();
 
         selectedChessPiece = null;
